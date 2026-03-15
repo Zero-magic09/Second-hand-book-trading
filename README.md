@@ -1,5 +1,18 @@
 # 校园书环 - 项目说明文档
 
+<p align="left">
+  <img src="https://img.shields.io/badge/SPRING%20BOOT-3.2.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
+  <img src="https://img.shields.io/badge/REACT-18.2.0-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/JAVA-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
+  <img src="https://img.shields.io/badge/MYSQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT-JSON%20WEB%20TOKEN-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+</p>
+
+<p align="left">
+  <img src="https://img.shields.io/badge/LICENSE-MIT-yellow?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/STATUS-COMPLETED-success?style=for-the-badge" />
+</p>
+
 ## 📚 项目概述
 
 **校园书环** (Campus Book Loop) 是一个校园二手书交易平台，旨在为大学生提供便捷的二手教材买卖服务。平台支持书籍发布、在线交易、实时聊天、求购发布等功能。

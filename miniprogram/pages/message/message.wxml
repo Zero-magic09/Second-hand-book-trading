@@ -1,0 +1,41 @@
+<!-- 消息列表 message.wxml -->
+<view class="page-container">
+  <!-- 搜索框 -->
+  <view class="search-bar">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索聊天记录" placeholder-class="search-placeholder" />
+    </view>
+  </view>
+
+  <!-- 聊天列表 -->
+  <view class="chat-list">
+    <view 
+      class="chat-item" 
+      wx:for="{{chatList}}" 
+      wx:key="id"
+      bindtap="onChatTap"
+      data-chat="{{item}}"
+    >
+      <view class="avatar-wrapper">
+        <image class="chat-avatar" src="{{item.otherPartyAvatar}}" mode="aspectFill"></image>
+        <view class="unread-badge" wx:if="{{item.unreadCount > 0}}">
+          {{item.unreadCount}}
+        </view>
+      </view>
+      <view class="chat-content">
+        <view class="chat-header">
+          <text class="chat-name">{{item.otherPartyName}}</text>
+          <text class="chat-time">{{item.time}}</text>
+        </view>
+        <text class="chat-message">{{item.lastMessage}}</text>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{chatList.length === 0}}">
+      <text class="empty-icon">💬</text>
+      <text class="empty-text">暂无消息</text>
+    </view>
+  </view>
+</view>

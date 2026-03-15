@@ -1,0 +1,249 @@
+/* 手机号登录页样式 mobile-login.wxss */
+
+.page-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 0 60rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mobile-header {
+  padding-top: 100rpx;
+  margin-bottom: 64rpx;
+  text-align: center;
+}
+
+.mobile-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.mobile-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #94a3b8;
+  margin-top: 16rpx;
+}
+
+.mobile-form {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 48rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 20rpx;
+  font-weight: 900;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+  margin-bottom: 16rpx;
+  margin-left: 8rpx;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2rpx solid #f1f5f9;
+  border-radius: 28rpx;
+  height: 128rpx;
+  padding: 0 48rpx;
+}
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding-right: 24rpx;
+  border-right: 2rpx solid #f1f5f9;
+  margin-right: 24rpx;
+}
+
+.prefix-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.prefix-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #475569;
+}
+
+.phone-input {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.code-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2rpx solid #f1f5f9;
+  border-radius: 28rpx;
+  height: 128rpx;
+  padding: 0 24rpx 0 48rpx;
+}
+
+.code-icon {
+  font-size: 32rpx;
+  margin-right: 24rpx;
+}
+
+.code-input {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 8rpx;
+}
+
+.input-placeholder {
+  color: #cbd5e1;
+  font-weight: 400;
+}
+
+.send-code-btn {
+  padding: 16rpx 32rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  background-color: #f8fafc;
+  color: #cbd5e1;
+}
+
+.send-code-btn.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+/* 图形验证码 */
+.captcha-box {
+  width: 160rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.captcha-box::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 0;
+  right: 0;
+  height: 2rpx;
+  background: rgba(0,0,0,0.1);
+  transform: rotate(-5deg);
+}
+
+.captcha-box::after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: 0;
+  right: 0;
+  height: 2rpx;
+  background: rgba(0,0,0,0.1);
+  transform: rotate(3deg);
+}
+
+.captcha-text {
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #3730a3;
+  letter-spacing: 8rpx;
+  font-family: 'Courier New', monospace;
+  text-shadow: 2rpx 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+.btn-submit {
+  width: 100%;
+  height: 128rpx;
+  border-radius: 36rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  margin-top: 48rpx;
+  margin-bottom: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 30rpx 80rpx rgba(16, 185, 129, 0.25);
+}
+
+.btn-submit::after {
+  border: none;
+}
+
+/* 协议文字 */
+.agreement-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: #94a3b8;
+  margin-top: 32rpx;
+}
+
+.agreement-text .link {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* 协议勾选 */
+.agreement-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 16rpx;
+}
+
+.checkbox {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 8rpx;
+  border: 3rpx solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.checkbox.checked {
+  background-color: #10b981;
+  border-color: #10b981;
+}
+
+.check-icon {
+  font-size: 20rpx;
+  color: #ffffff;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.agreement-text {
+  font-size: 24rpx;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.agreement-text .link {
+  color: #0f172a;
+  font-weight: 700;
+}

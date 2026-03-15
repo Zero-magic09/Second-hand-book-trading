@@ -1,0 +1,60 @@
+{
+  "entryPagePath": "pages/login/login",
+  "pages": [
+    "pages/login/login",
+    "pages/home/home",
+    "pages/wanted/wanted",
+    "pages/publish/publish",
+    "pages/message/message",
+    "pages/me/me",
+    "pages/book-detail/book-detail",
+    "pages/checkout/checkout",
+    "pages/chat-detail/chat-detail",
+    "pages/orders/orders",
+    "pages/publish-records/publish-records",
+    "pages/student-verification/student-verification",
+    "pages/publish-wanted/publish-wanted",
+    "pages/mobile-login/mobile-login",
+    "pages/publish-edit/publish-edit",
+    "pages/register/register"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "校园书环",
+    "backgroundColor": "#f8f8f8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#9ca3af",
+    "selectedColor": "#10b981",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/wanted/wanted",
+        "text": "求购区"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

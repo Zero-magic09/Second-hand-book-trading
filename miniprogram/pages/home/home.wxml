@@ -1,0 +1,129 @@
+<!-- 首页 home.wxml -->
+<view class="page-container">
+  <!-- 顶部搜索区域 -->
+  <view class="search-header">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索课程名称、书名、ISBN..." 
+        placeholder-class="search-placeholder"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearchConfirm"
+        confirm-type="search"
+      />
+      <text class="clear-icon" wx:if="{{searchKeyword}}" bindtap="onClearSearch">✕</text>
+    </view>
+  </view>
+
+  <view class="content-scroll">
+    <view class="content-wrapper">
+      <!-- 动态 Banner -->
+      <view class="banner-card">
+        <view class="banner-content">
+          <view class="banner-tag">校园活动</view>
+          <view class="banner-title">毕业季 · 知识传承</view>
+          <view class="banner-desc">将你的闲置教材传递给学弟学妹，最高可获 500 碳积分！</view>
+          <view class="banner-btn">立即参与</view>
+        </view>
+        <view class="banner-bg"></view>
+        <text class="banner-icon">♻️</text>
+      </view>
+
+      <!-- 快捷服务 -->
+      <view class="quick-service">
+        <view class="service-item" wx:for="{{quickServices}}" wx:key="label">
+          <view class="service-icon-wrapper {{item.bgClass}}">
+            <text class="service-icon">{{item.emoji}}</text>
+          </view>
+          <text class="service-label">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 专业分类筛选 -->
+      <view class="section">
+        <view class="section-header">
+          <text class="section-title">专业教材</text>
+          <view class="filter-btn">
+            <text class="filter-text">筛选></text>
+          </view>
+        </view>
+        <scroll-view scroll-x class="category-scroll" enhanced show-scrollbar="{{false}}">
+          <view class="category-list">
+            <view 
+              class="category-item {{activeTab === item ? 'active' : ''}}" 
+              wx:for="{{categories}}" 
+              wx:key="*this"
+              bindtap="onCategoryTap"
+              data-category="{{item}}"
+            >
+              {{item}}
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <!-- 最新好书 -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-title-wrapper">
+            <text class="trending-icon">📈</text>
+            <text class="section-title">最新好书</text>
+          </view>
+        </view>
+        
+        <view class="book-grid">
+          <view 
+            class="book-card" 
+            wx:for="{{books}}" 
+            wx:key="id"
+            bindtap="onBookTap"
+            data-book="{{item}}"
+          >
+            <view class="book-image-wrapper">
+              <image class="book-image" src="{{item.images[0]}}" mode="aspectFill"></image>
+              <view class="book-tags">
+                <view class="book-tag condition">{{item.condition}}</view>
+                <view class="book-tag major">{{item.major}}</view>
+              </view>
+            </view>
+            
+            <view class="book-info">
+              <text class="book-title">{{item.title}}</text>
+              <view class="book-meta">
+                <view class="meta-row" wx:if="{{item.author}}">
+                  <text class="meta-label">作者：</text>
+                  <text class="meta-text">{{item.author}}</text>
+                </view>
+                <view class="meta-row" wx:if="{{item.publisher}}">
+                  <text class="meta-label">出版：</text>
+                  <text class="meta-text">{{item.publisher}}</text>
+                </view>
+              </view>
+
+              <view class="book-footer">
+                <view class="book-price-wrapper">
+                  <text class="book-price">¥{{item.price}}</text>
+                  <text class="book-original-price">¥{{item.originalPrice}}</text>
+                </view>
+                <view class="seller-info">
+                  <image class="seller-avatar" src="{{item.sellerAvatar}}" mode="aspectFill"></image>
+                  <text class="seller-name">{{item.sellerName}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        
+        <view class="list-footer">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <text class="footer-text" wx:if="{{books.length > 0}}">已经到底了，快去发布吧</text>
+          <text class="footer-text" wx:else>未找到相关书籍，试试其他关键词</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,77 @@
+<!-- 登录页 login.wxml -->
+<view class="page-container">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration top"></view>
+  <view class="bg-decoration bottom"></view>
+
+  <!-- 社交登录视图 -->
+  <view class="login-content">
+    <!-- Logo 区域 -->
+    <view class="logo-section">
+      <view class="logo-wrapper">
+        <view class="logo-bg"></view>
+        <view class="logo-container">
+          <view class="logo-inner">
+            <!-- 书本图标 -->
+            <view class="book-icon">
+              <view class="book-left"></view>
+              <view class="book-right"></view>
+            </view>
+          </view>
+          <view class="logo-badge recycle">
+            <text class="badge-emoji">♻️</text>
+          </view>
+          <view class="logo-badge leaf">
+            <text class="badge-emoji">🌿</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="brand-info">
+        <view class="brand-tag">
+          <text class="tag-text">专属高校交易环境</text>
+        </view>
+        <view class="brand-title">
+          <text>校园</text><text class="highlight">书环</text>
+        </view>
+        <text class="brand-slogan">连接学子，延续知识的温度</text>
+      </view>
+    </view>
+
+    <!-- 特性展示 -->
+    <view class="features-card">
+      <view class="feature-item">
+        <view class="feature-icon-wrapper bg-emerald">
+          <text class="feature-icon">🛡️</text>
+        </view>
+        <text class="feature-title">在校实名</text>
+        <text class="feature-desc">专属高校交易环境</text>
+      </view>
+      <view class="feature-divider"></view>
+      <view class="feature-item">
+        <view class="feature-icon-wrapper bg-sky">
+          <text class="feature-icon">💚</text>
+        </view>
+        <text class="feature-title">循环减碳</text>
+        <text class="feature-desc">累计减碳 3.2 吨</text>
+      </view>
+    </view>
+
+    <!-- 登录按钮 -->
+    <view class="action-buttons">
+      <button class="btn-mobile" bindtap="goMobileLogin">
+        <text>登录</text>
+      </button>
+      <button class="btn-register" bindtap="goRegister">
+        <text>注册新账号</text>
+      </button>
+    </view>
+
+    <!-- 底部 -->
+    <view class="footer-slogan">
+      <view class="line"></view>
+      <text class="slogan-text">科技改变生活</text>
+      <view class="line"></view>
+    </view>
+  </view>
+</view>

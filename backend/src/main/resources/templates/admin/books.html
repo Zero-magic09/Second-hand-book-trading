@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>书籍管理 - 校园书环</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">📚 校园书环</div>
+            </div>
+            <nav class="nav">
+                <a th:href="@{/admin}" class="nav-link"><span>📊</span> 数据概览</a>
+                <a th:href="@{/admin/users}" class="nav-link"><span>👥</span> 用户管理</a>
+                <a th:href="@{/admin/books}" class="nav-link active"><span>📖</span> 书籍管理</a>
+                <a th:href="@{/admin/orders}" class="nav-link"><span>📦</span> 订单管理</a>
+                <a th:href="@{/admin/verifications}" class="nav-link"><span>✅</span> 认证审核</a>
+                <a th:href="@{/admin/wanted}" class="nav-link"><span>📢</span> 求购管理</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="topbar animate-in">
+                <h1 class="page-title">书籍管理</h1>
+                <div class="user-profile">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: var(--slate-600);">管理员</span>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <div class="card animate-in">
+                <div class="card-header">
+                    <h2 class="card-title">书籍列表</h2>
+                    <div class="search-group" style="flex-wrap: wrap;">
+                        <form th:action="@{/admin/books}" method="get" class="search-group" style="flex-wrap: wrap;">
+                            <input type="text" name="keyword" class="form-input" placeholder="搜索书名/作者/ISBN..."
+                                th:value="${keyword}" style="width: 220px;">
+                            <select name="category" class="form-input" style="width: 140px; cursor: pointer;">
+                                <option value="">全部分类</option>
+                                <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"
+                                    th:selected="${cat == category}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">🔍 搜索</button>
+                            <a th:href="@{/admin/books}" class="btn btn-outline">重置</a>
+                        </form>
+                        <div style="flex: 1;"></div>
+                        <a th:href="@{/admin/books/add}" class="btn btn-primary">➕ 新增书籍</a>
+                    </div>
+                </div>
+
+                <div th:if="${books == null || books.isEmpty()}" class="empty-state">
+                    <div class="empty-icon">📖</div>
+                    <p>暂无书籍数据，请尝试调整搜索条件</p>
+                </div>
+
+                <div class="book-grid" th:unless="${books == null || books.isEmpty()}">
+                    <div class="book-card" th:each="book : ${books}">
+                        <div class="book-cover">
+                            <img th:if="${book.coverImage != null}"
+                                th:src="${book.coverImage.contains('/api/uploads/') ? book.coverImage.replace('/api/uploads/', '/uploads/') : book.coverImage}"
+                                alt="书籍封面">
+                            <div th:unless="${book.coverImage != null}"
+                                style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ecfdf5, #d1fae5); font-size: 4rem;">
+                                📚
+                            </div>
+                        </div>
+                        <div class="book-content">
+                            <div class="book-title" th:text="${book.title}" th:title="${book.title}">书籍标题</div>
+                            <div class="book-author" th:text="${book.author ?: '未知作者'}">作者</div>
+                            <div class="book-publisher"
+                                style="font-size: 0.75rem; color: var(--slate-500); margin-top: 0.25rem;">
+                                发布人: <span th:text="${book.seller != null ? book.seller.nickname : '未知用户'}">用户</span>
+                            </div>
+
+                            <div class="book-price-row">
+                                <span class="price">¥<span
+                                        th:text="${#numbers.formatDecimal(book.price, 1, 2)}">0.00</span></span>
+                                <span class="original-price" th:if="${book.originalPrice != null}"
+                                    th:text="'¥' + ${#numbers.formatDecimal(book.originalPrice, 1, 2)}">¥0.00</span>
+                            </div>
+
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span class="badge badge-info" style="font-size: 0.7rem;"
+                                    th:text="${book.category}">分类</span>
+                                <span class="badge badge-success" th:if="${book.status == 0}">在售</span>
+                                <span class="badge badge-warning" th:if="${book.status == 1}">已预订</span>
+                                <span class="badge badge-info" th:if="${book.status == 2}">已售出</span>
+                                <span class="badge badge-secondary" th:if="${book.status == 3}"
+                                    style="background-color: #94a3b8; color: white;">已下架</span>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <a th:href="@{/admin/books/{id}/edit(id=${book.id})}" class="btn btn-outline btn-sm"
+                                    style="justify-content: center;">编辑</a>
+                                <form th:action="@{/admin/books/{id}/delete(id=${book.id})}" method="post"
+                                    onsubmit="return confirm('确定要删除这本书吗？');" style="display: block;">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        style="width: 100%; justify-content: center;">删除</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分页组件可以后续添加 -->
+                <div style="margin-top: 2rem; text-align: center; color: var(--slate-400); font-size: 0.875rem;"
+                    th:if="${books != null && !books.isEmpty()}">
+                    共找到 <span th:text="${#lists.size(books)}">0</span> 本书籍
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

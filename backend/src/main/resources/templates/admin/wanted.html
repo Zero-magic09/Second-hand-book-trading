@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>求购管理 - 校园书环</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">📚 校园书环</div>
+            </div>
+            <nav class="nav">
+                <a th:href="@{/admin}" class="nav-link"><span>📊</span> 数据概览</a>
+                <a th:href="@{/admin/users}" class="nav-link"><span>👥</span> 用户管理</a>
+                <a th:href="@{/admin/books}" class="nav-link"><span>📖</span> 书籍管理</a>
+                <a th:href="@{/admin/orders}" class="nav-link"><span>📦</span> 订单管理</a>
+                <a th:href="@{/admin/verifications}" class="nav-link"><span>✅</span> 认证审核</a>
+                <a th:href="@{/admin/wanted}" class="nav-link active"><span>📢</span> 求购管理</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="topbar animate-in">
+                <h1 class="page-title">求购管理</h1>
+                <div class="user-profile">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: var(--slate-600);">管理员</span>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <div class="card animate-in">
+                <div class="card-header">
+                    <h2 class="card-title">求购列表</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <form th:action="@{/admin/wanted}" method="get" class="search-form">
+                            <input type="text" name="keyword" th:value="${keyword}" placeholder="搜索求购..."
+                                class="form-input" style="width: 200px;">
+                            <button type="submit" class="btn btn-primary btn-sm">搜索</button>
+                        </form>
+                        <div class="badge badge-info" th:if="${posts != null && !posts.isEmpty()}"
+                            th:text="'共 ' + ${posts.totalElements} + ' 条求购'">共 0 条求购</div>
+                    </div>
+                </div>
+
+                <div th:if="${posts == null || posts.isEmpty()}" class="empty-state">
+                    <div class="empty-icon">📢</div>
+                    <p>暂无求购信息，还没有人发布求购需求</p>
+                </div>
+
+                <div class="book-grid" th:unless="${posts == null || posts.isEmpty()}"
+                    style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                    <div class="card" th:each="post : ${posts}"
+                        style="border: 1px solid var(--slate-200); box-shadow: none; margin-bottom: 0;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--slate-800); margin: 0;"
+                                th:text="${post.title}">求购标题</h3>
+                            <span style="font-weight: 700; color: var(--danger); font-size: 1.125rem;"
+                                th:text="'¥' + ${#numbers.formatDecimal(post.maxPrice, 1, 0)}">¥0</span>
+                        </div>
+
+                        <p style="color: var(--slate-600); font-size: 0.875rem; margin-bottom: 1rem; line-height: 1.6; min-height: 2.8em;"
+                            th:text="${post.description != null ? (post.description.length() > 60 ? post.description.substring(0, 60) + '...' : post.description) : '无描述'}">
+                            求购描述...
+                        </p>
+
+                        <div
+                            style="border-top: 1px solid var(--slate-100); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div
+                                style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--slate-500);">
+                                <div class="avatar"
+                                    style="width: 1.5rem; height: 1.5rem; font-size: 0.75rem; overflow: hidden;">
+                                    <img th:if="${post.user != null && post.user.avatarUrl != null && post.user.avatarUrl != ''}"
+                                        th:src="${post.user.avatarUrl.contains('/api/uploads/') ? post.user.avatarUrl.replace('/api/uploads/', '/uploads/') : post.user.avatarUrl}"
+                                        alt="头像" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <span
+                                        th:unless="${post.user != null && post.user.avatarUrl != null && post.user.avatarUrl != ''}"
+                                        th:text="${post.user != null && post.user.nickname != null ? post.user.nickname.substring(0,1) : 'U'}">U</span>
+                                </div>
+                                <span th:text="${post.user != null ? post.user.nickname : '匿名'}">用户</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 0.75rem; color: var(--slate-400);"
+                                    th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}">2024-01-01</span>
+                                <form th:action="@{/admin/wanted/{id}/delete(id=${post.id})}" method="post"
+                                    onsubmit="return confirm('确定要删除这条求购信息吗？');" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">删除</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

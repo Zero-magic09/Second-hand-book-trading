@@ -1,0 +1,78 @@
+<!-- 手机号登录页 mobile-login.wxml -->
+<view class="page-container">
+  <view class="mobile-header">
+    <text class="mobile-title">欢迎您的到来</text>
+    <text class="mobile-subtitle">验证后将自动进入书环世界</text>
+  </view>
+
+  <view class="mobile-form">
+    <view class="form-group">
+      <text class="form-label">用户名</text>
+      <view class="phone-input-wrapper">
+        <view class="phone-prefix">
+          <text class="prefix-icon">👤</text>
+        </view>
+        <input 
+          class="phone-input" 
+          type="text" 
+          placeholder="请输入用户名"
+          placeholder-class="input-placeholder"
+          value="{{username}}"
+          bindinput="onUsernameInput"
+        />
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">手机号码</text>
+      <view class="phone-input-wrapper">
+        <view class="phone-prefix">
+          <text class="prefix-icon">📱</text>
+          <text class="prefix-text">+86</text>
+        </view>
+        <input 
+          class="phone-input" 
+          type="number" 
+          maxlength="11"
+          placeholder="请输入11位手机号"
+          placeholder-class="input-placeholder"
+          value="{{phoneNumber}}"
+          bindinput="onPhoneInput"
+        />
+      </view>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">验证码</text>
+      <view class="code-input-wrapper">
+        <text class="code-icon">🔐</text>
+        <input 
+          class="code-input" 
+          type="number" 
+          maxlength="4"
+          placeholder="4位验证码"
+          placeholder-class="input-placeholder"
+          value="{{vCode}}"
+          bindinput="onCodeInput"
+        />
+        <view class="captcha-box" bindtap="refreshCaptcha">
+          <text class="captcha-text">{{captchaCode}}</text>
+        </view>
+      </view>
+    </view>
+
+    <button 
+      class="btn-submit" 
+      bindtap="onMobileLogin"
+    >
+      立即登录
+    </button>
+
+    <view class="agreement-text">
+      <text>登录即代表同意 </text>
+      <text class="link">用户协议</text>
+      <text> 与 </text>
+      <text class="link">隐私政策</text>
+    </view>
+  </view>
+</view>

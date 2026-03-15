@@ -1,0 +1,125 @@
+<!-- 发布书籍 publish.wxml -->
+<scroll-view class="page-container" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="form-container">
+    <!-- 图片上传区域 -->
+    <view class="image-upload-area">
+      <!-- 已选择的图片 -->
+      <view class="image-item" wx:for="{{images}}" wx:key="*this">
+        <image class="preview-image" src="{{item}}" mode="aspectFill" bindtap="onPreviewImage" data-url="{{item}}"></image>
+        <view class="delete-btn" catchtap="onDeleteImage" data-index="{{index}}">×</view>
+      </view>
+      <!-- 添加照片按钮 -->
+      <view class="upload-item add-photo" bindtap="onChooseImage" wx:if="{{images.length < 1}}">
+        <text class="upload-icon">🖼️</text>
+        <text class="upload-text">添加照片</text>
+      </view>
+      <!-- 扫码识别 -->
+      <view class="upload-item scan-code" bindtap="onScanCode">
+        <text wx:if="{{!isScanning && !isAnalyzing}}" class="upload-icon">📷</text>
+        <view wx:if="{{isScanning}}" class="scanning-indicator"></view>
+        <view wx:if="{{isAnalyzing}}" class="loading-spinner"></view>
+        <text class="upload-text" wx:if="{{!isScanning && !isAnalyzing}}">扫码识别</text>
+      </view>
+    </view>
+
+    <!-- 表单字段 -->
+    <view class="form-fields">
+      <view class="form-group">
+        <text class="form-label">书名</text>
+        <input class="form-input" placeholder="请输入书名" value="{{bookData.title}}" bindinput="onInputChange" data-field="title" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">作者</text>
+        <input class="form-input" placeholder="请输入作者" value="{{bookData.author}}" bindinput="onInputChange" data-field="author" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">出版社</text>
+        <input class="form-input" placeholder="请输入出版社" value="{{bookData.publisher}}" bindinput="onInputChange" data-field="publisher" />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">ISBN</text>
+        <input class="form-input" placeholder="请输入ISBN" value="{{bookData.isbn}}" bindinput="onInputChange" data-field="isbn" />
+      </view>
+
+      <view class="form-row">
+        <view class="form-group half">
+          <text class="form-label">售价</text>
+          <view class="price-input-wrapper">
+            <text class="price-symbol">¥</text>
+            <input 
+              class="form-input price-input" 
+              type="digit"
+              placeholder="0.00"
+              placeholder-class="input-placeholder"
+              value="{{bookData.price}}"
+              bindinput="onInputChange"
+              data-field="price"
+            />
+          </view>
+        </view>
+        <view class="form-group half">
+          <text class="form-label">原价</text>
+          <view class="price-input-wrapper">
+            <text class="price-symbol">¥</text>
+            <input 
+              class="form-input price-input" 
+              type="digit"
+              placeholder="0.00"
+              placeholder-class="input-placeholder"
+              value="{{bookData.originalPrice}}"
+              bindinput="onInputChange"
+              data-field="originalPrice"
+            />
+          </view>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">新旧程度</text>
+        <view class="condition-options">
+          <view 
+            class="condition-item {{bookData.condition === item ? 'active' : ''}}" 
+            wx:for="{{conditions}}" 
+            wx:key="*this"
+            bindtap="onConditionSelect"
+            data-condition="{{item}}"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">详细描述</text>
+        <textarea 
+          class="form-textarea" 
+          placeholder="描述一下书的新旧程度、是否有笔记等..."
+          placeholder-class="input-placeholder"
+          value="{{bookData.description}}"
+          bindinput="onInputChange"
+          data-field="description"
+          maxlength="500"
+        />
+        <text class="char-count">{{bookData.description.length || 0}}/500</text>
+      </view>
+
+      <picker mode="selector" range="{{majors}}" value="{{majorIndex}}" bindchange="onMajorChange">
+        <view class="select-group">
+          <text class="select-label">选择分类与专业</text>
+          <view class="select-right">
+            <view class="tag primary">{{bookData.major}}</view>
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="footer-btn">
+      <button class="submit-btn" bindtap="onSubmit">{{editingId ? '确认修改' : '确认发布'}}</button>
+    </view>
+  </view>
+</scroll-view>

@@ -1,0 +1,6 @@
+/* 图标样式占位文件 - 可以替换为真实的 iconfont */
+.iconfont {
+  font-family: "iconfont";
+  font-size: 32rpx;
+  font-style: normal;
+}

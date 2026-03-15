@@ -1,0 +1,637 @@
+/* 登录页样式 login.wxss */
+
+.page-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 背景装饰 */
+.bg-decoration {
+  position: absolute;
+  pointer-events: none;
+}
+
+.bg-decoration.top {
+  top: -20%;
+  left: -10%;
+  width: 120%;
+  height: 70%;
+  background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 50%, #f0f9ff 100%);
+  opacity: 0.8;
+  filter: blur(100rpx);
+}
+
+.bg-decoration.bottom {
+  bottom: -10%;
+  right: -10%;
+  width: 60%;
+  height: 30%;
+  background-color: rgba(167, 243, 208, 0.3);
+  filter: blur(80rpx);
+}
+
+/* 登录内容 */
+.login-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0 80rpx;
+}
+
+/* Logo 区域 */
+.logo-section {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 210rpx;
+  padding-bottom: 60rpx;
+}
+
+.logo-wrapper {
+  position: relative;
+  margin-bottom: 80rpx;
+}
+
+.logo-bg {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(16, 185, 129, 0.2);
+  filter: blur(60rpx);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.logo-container {
+  position: relative;
+  width: 240rpx;
+  height: 240rpx;
+  background-color: #ffffff;
+  border-radius: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 60rpx 120rpx rgba(0, 0, 0, 0.06), 0 20rpx 40rpx rgba(0, 0, 0, 0.04);
+  border: 3rpx solid rgba(241, 245, 249, 0.8);
+}
+
+.logo-inner {
+  width: 160rpx;
+  height: 160rpx;
+  background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16rpx 40rpx rgba(16, 185, 129, 0.3);
+}
+
+/* 书本图标 - 纯CSS绘制 */
+.book-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+.book-left,
+.book-right {
+  width: 40rpx;
+  height: 56rpx;
+  background-color: #ffffff;
+  border-radius: 6rpx;
+  position: relative;
+}
+
+.book-left::before,
+.book-right::before {
+  content: '';
+  position: absolute;
+  top: 12rpx;
+  width: 24rpx;
+  height: 4rpx;
+  background-color: rgba(16, 185, 129, 0.3);
+  border-radius: 2rpx;
+}
+
+.book-left::before {
+  right: 6rpx;
+}
+
+.book-right::before {
+  left: 6rpx;
+}
+
+.book-left::after,
+.book-right::after {
+  content: '';
+  position: absolute;
+  top: 24rpx;
+  width: 20rpx;
+  height: 4rpx;
+  background-color: rgba(16, 185, 129, 0.3);
+  border-radius: 2rpx;
+}
+
+.book-left::after {
+  right: 6rpx;
+}
+
+.book-right::after {
+  left: 6rpx;
+}
+
+.logo-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.logo-badge.recycle {
+  top: -16rpx;
+  right: -12rpx;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-badge.leaf {
+  bottom: -12rpx;
+  left: -16rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+}
+
+.badge-emoji {
+  font-size: 28rpx;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8rpx) rotate(10deg); }
+}
+
+/* 品牌信息 */
+.brand-info {
+  text-align: center;
+}
+
+.brand-tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+  margin-bottom: 8rpx;
+}
+
+.tag-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
+
+.tag-text {
+  font-size: 18rpx;
+  font-weight: 900;
+  color: #047857;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+}
+
+.brand-title {
+  font-size: 64rpx;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: 4rpx;
+}
+
+.brand-title .highlight {
+  color: #10b981;
+}
+
+.brand-slogan {
+  font-size: 28rpx;
+  color: #94a3b8;
+  letter-spacing: 2rpx;
+  margin-top: 8rpx;
+}
+
+/* 特性卡片 */
+.features-card {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(40rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.8);
+  border-radius: 50rpx;
+  padding: 16rpx;
+  margin-bottom: 60rpx;
+  box-shadow: 0 24rpx 48rpx rgba(100, 116, 139, 0.1);
+}
+
+.feature-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48rpx 32rpx;
+}
+
+.feature-divider {
+  width: 2rpx;
+  background-color: #f1f5f9;
+}
+
+.feature-icon-wrapper {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+}
+
+.feature-icon-wrapper.bg-emerald {
+  background-color: #ecfdf5;
+}
+
+.feature-icon-wrapper.bg-sky {
+  background-color: #e0f2fe;
+}
+
+.feature-icon {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.feature-icon-wrapper.bg-emerald .feature-icon {
+  color: #10b981;
+}
+
+.feature-icon-wrapper.bg-sky .feature-icon {
+  color: #0ea5e9;
+}
+
+.feature-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.feature-desc {
+  font-size: 20rpx;
+  color: #94a3b8;
+  margin-top: 8rpx;
+}
+
+/* 协议勾选 */
+.agreement-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 80rpx;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 10rpx;
+  border: 3rpx solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.checkbox.checked {
+  background-color: #10b981;
+  border-color: #10b981;
+  box-shadow: 0 8rpx 24rpx rgba(16, 185, 129, 0.25);
+}
+
+.checkbox.small {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 8rpx;
+  margin-right: 12rpx;
+}
+
+.check-icon {
+  font-size: 24rpx;
+  color: #ffffff;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.agreement-text {
+  font-size: 24rpx;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.agreement-text .link {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  margin-bottom: 40rpx;
+}
+
+.btn-wechat {
+  width: 100%;
+  height: 128rpx;
+  background-color: #07C160;
+  border-radius: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 34rpx;
+  font-weight: 700;
+  box-shadow: 0 30rpx 80rpx rgba(7, 193, 96, 0.2);
+  border: none;
+  margin-bottom: 32rpx;
+}
+
+.btn-wechat::after {
+  border: none;
+}
+
+.btn-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 24rpx;
+}
+
+.btn-mobile {
+  width: 100%;
+  height: 128rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  color: #ffffff;
+  font-weight: 700;
+  background-color: #10b981;
+  border-radius: 36rpx;
+  box-shadow: 0 30rpx 80rpx rgba(16, 185, 129, 0.25);
+  border: none;
+}
+
+.btn-mobile::after {
+  border: none;
+}
+
+.arrow-icon {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.4;
+  margin-left: 8rpx;
+}
+
+/* 底部标语 */
+.footer-slogan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 40rpx;
+  padding-top: 20rpx;
+  opacity: 0.3;
+}
+
+.line {
+  width: 64rpx;
+  height: 1rpx;
+  background-color: #0f172a;
+}
+
+.slogan-text {
+  font-size: 20rpx;
+  font-weight: 900;
+  letter-spacing: 6rpx;
+  text-transform: uppercase;
+  margin: 0 32rpx;
+}
+
+/* 手机号登录 */
+.mobile-login-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 80rpx;
+  min-height: 100vh;
+}
+
+.back-btn {
+  width: 96rpx;
+  height: 96rpx;
+  background-color: #ffffff;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 160rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.back-icon {
+  width: 48rpx;
+  height: 48rpx;
+  opacity: 0.4;
+}
+
+.mobile-header {
+  margin-top: 80rpx;
+  margin-bottom: 64rpx;
+}
+
+.mobile-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.mobile-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #94a3b8;
+  margin-top: 16rpx;
+}
+
+.mobile-form {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 48rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 20rpx;
+  font-weight: 900;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+  margin-bottom: 16rpx;
+  margin-left: 8rpx;
+}
+
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2rpx solid #f1f5f9;
+  border-radius: 28rpx;
+  height: 128rpx;
+  padding: 0 48rpx;
+}
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding-right: 24rpx;
+  border-right: 2rpx solid #f1f5f9;
+  margin-right: 24rpx;
+}
+
+.prefix-icon {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.4;
+  margin-right: 16rpx;
+}
+
+.prefix-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #475569;
+}
+
+.phone-input {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.code-input-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 2rpx solid #f1f5f9;
+  border-radius: 28rpx;
+  height: 128rpx;
+  padding: 0 24rpx 0 48rpx;
+}
+
+.code-icon {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.4;
+  margin-right: 24rpx;
+}
+
+.code-input {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 8rpx;
+}
+
+.input-placeholder {
+  color: #cbd5e1;
+  font-weight: 400;
+}
+
+.send-code-btn {
+  padding: 16rpx 32rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  background-color: #f8fafc;
+  color: #cbd5e1;
+}
+
+.send-code-btn.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.btn-submit {
+  width: 100%;
+  height: 128rpx;
+  border-radius: 36rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  background-color: #f1f5f9;
+  color: #cbd5e1;
+  border: none;
+  margin-top: 48rpx;
+  margin-bottom: 48rpx;
+}
+
+.btn-submit.active {
+  background-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 30rpx 80rpx rgba(16, 185, 129, 0.25);
+}
+
+.btn-submit::after {
+  border: none;
+}
+
+.agreement-section.mobile {
+  justify-content: flex-start;
+  padding: 0 16rpx;
+}
+
+/* ע�ᰴť */
+.btn-register {
+  width: 100%;
+  height: 128rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #64748b;
+  font-weight: 700;
+  background-color: transparent;
+  border-radius: 36rpx;
+  border: none;
+  margin-top: 24rpx;
+}
+
+.btn-register::after {
+  border: none;
+}
+
+.btn-register:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.btn-register:active {
+  background-color: transparent !important;
+  opacity: 0.7;
+}

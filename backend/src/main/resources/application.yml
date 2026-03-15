@@ -1,0 +1,69 @@
+# 校园书环 - 后端服务配置
+
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    # context-path 已移除，现在由各控制器自行管理路径前缀
+    # Admin 控制器: /admin
+    # API 控制器: /api/*
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+# Spring配置
+spring:
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/campus_book_loop?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&characterSetResults=UTF-8&connectionCollation=utf8mb4_unicode_ci
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: CampusBookLoopHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  # Jackson配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+# JWT配置
+jwt:
+  secret: campusbookloop2024secretkeyforsecurityjwttokengenerationsupersecretpassword
+  expiration: 86400000  # 24小时
+
+# 文件上传目录
+file:
+  upload-dir: uploads
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.campusbookloop: DEBUG
+    org.springframework.security: DEBUG

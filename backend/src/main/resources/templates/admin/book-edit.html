@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑书籍 - 校园书环</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">📚 校园书环</div>
+            </div>
+            <nav class="nav">
+                <a th:href="@{/admin}" class="nav-link"><span>📊</span> 数据概览</a>
+                <a th:href="@{/admin/users}" class="nav-link"><span>👥</span> 用户管理</a>
+                <a th:href="@{/admin/books}" class="nav-link active"><span>📖</span> 书籍管理</a>
+                <a th:href="@{/admin/orders}" class="nav-link"><span>📦</span> 订单管理</a>
+                <a th:href="@{/admin/verifications}" class="nav-link"><span>✅</span> 认证审核</a>
+                <a th:href="@{/admin/wanted}" class="nav-link"><span>📢</span> 求购管理</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="topbar animate-in">
+                <h1 class="page-title">编辑书籍</h1>
+                <div class="user-profile">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: var(--slate-600);">管理员</span>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <div class="card animate-in" style="max-width: 900px; margin: 0 auto;">
+                <div class="card-header">
+                    <h2 class="card-title">书籍详情</h2>
+                </div>
+                <form th:action="@{/admin/books/{id}/edit(id=${book.id})}" method="post">
+                    <div class="form-group">
+                        <label class="form-label">书名 <span class="required">*</span></label>
+                        <input type="text" name="title" class="form-input" th:value="${book.title}" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">作者</label>
+                            <input type="text" name="author" class="form-input" th:value="${book.author}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">出版社</label>
+                            <input type="text" name="publisher" class="form-input" th:value="${book.publisher}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">原价 <span class="required">*</span></label>
+                            <input type="number" name="originalPrice" class="form-input"
+                                th:value="${book.originalPrice}" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">售价 <span class="required">*</span></label>
+                            <input type="number" name="price" class="form-input" th:value="${book.price}" step="0.01"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">分类 <span class="required">*</span></label>
+                            <select name="category" class="form-select" required>
+                                <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"
+                                    th:selected="${cat == book.category}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">成色 <span class="required">*</span></label>
+                            <select name="bookCondition" class="form-select" required>
+                                <option value="全新" th:selected="${book.condition == '全新'}">全新</option>
+                                <option value="九成新" th:selected="${book.condition == '九成新'}">九成新</option>
+                                <option value="八成新" th:selected="${book.condition == '八成新'}">八成新</option>
+                                <option value="较旧" th:selected="${book.condition == '较旧'}">较旧</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">ISBN</label>
+                            <input type="text" name="isbn" class="form-input" th:value="${book.isbn}">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">状态 <span class="required">*</span></label>
+                            <select name="status" class="form-select" required>
+                                <option value="0" th:selected="${book.status == 0}">在售</option>
+                                <option value="1" th:selected="${book.status == 1}">已预订</option>
+                                <option value="2" th:selected="${book.status == 2}">已售出</option>
+                                <option value="3" th:selected="${book.status == 3}">已下架</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图片</label>
+                        <div class="image-upload-area">
+                            <input type="file" id="imageFile" accept="image/*" style="display:none;"
+                                onchange="uploadImage(this)">
+                            <input type="hidden" name="imageUrl" id="imageUrl" th:value="${imageUrl}">
+                            <div id="imagePreview" class="image-preview"
+                                th:style="${imageUrl != null && !imageUrl.isEmpty()} ? '' : 'display:none;'">
+                                <img id="previewImg"
+                                    th:src="${imageUrl != null && imageUrl.contains('/api/uploads/') ? imageUrl.replace('/api/uploads/', '/uploads/') : imageUrl}"
+                                    alt="预览">
+                                <button type="button" class="remove-btn" onclick="removeImage()">×</button>
+                            </div>
+                            <button type="button" class="upload-btn" id="uploadBtn"
+                                onclick="document.getElementById('imageFile').click()"
+                                th:style="${imageUrl != null && !imageUrl.isEmpty()} ? 'display:none;' : ''">
+                                📷 点击上传图片
+                            </button>
+                        </div>
+                        <div class="form-hint">支持 JPG、PNG 格式，最大 5MB</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">描述</label>
+                        <textarea name="description" class="form-textarea" th:text="${book.description}"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <a th:href="@{/admin/books}" class="btn btn-secondary">取消</a>
+                        <button type="submit" class="btn btn-primary">✓ 保存修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        function uploadImage(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片大小不能超过 5MB');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                document.getElementById('uploadBtn').textContent = '⭐ 上传中...';
+                document.getElementById('uploadBtn').disabled = true;
+
+                fetch('/api/upload/image', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.code === 0) {
+                            document.getElementById('imageUrl').value = data.url;
+                            document.getElementById('previewImg').src = data.url;
+                            document.getElementById('imagePreview').style.display = 'inline-block';
+                            document.getElementById('uploadBtn').style.display = 'none';
+                        } else {
+                            alert('上传失败: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('上传失败: ' + error.message);
+                    })
+                    .finally(() => {
+                        document.getElementById('uploadBtn').textContent = '📷 点击上传图片';
+                        document.getElementById('uploadBtn').disabled = false;
+                    });
+            }
+        }
+
+        function removeImage() {
+            document.getElementById('imageUrl').value = '';
+            document.getElementById('previewImg').src = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('uploadBtn').style.display = 'inline-block';
+            document.getElementById('imageFile').value = '';
+        }
+    </script>
+</body>
+
+</html>

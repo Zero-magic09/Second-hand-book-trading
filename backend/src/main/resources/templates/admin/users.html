@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理 - 校园书环</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">📚 校园书环</div>
+            </div>
+            <nav class="nav">
+                <a th:href="@{/admin}" class="nav-link"><span>📊</span> 数据概览</a>
+                <a th:href="@{/admin/users}" class="nav-link active"><span>👥</span> 用户管理</a>
+                <a th:href="@{/admin/books}" class="nav-link"><span>📖</span> 书籍管理</a>
+                <a th:href="@{/admin/orders}" class="nav-link"><span>📦</span> 订单管理</a>
+                <a th:href="@{/admin/verifications}" class="nav-link"><span>✅</span> 认证审核</a>
+                <a th:href="@{/admin/wanted}" class="nav-link"><span>📢</span> 求购管理</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="topbar animate-in">
+                <h1 class="page-title">用户管理</h1>
+                <div class="user-profile">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: var(--slate-600);">管理员</span>
+                    <div class="avatar">A</div>
+                </div>
+            </div>
+
+            <div class="card animate-in">
+                <div class="card-header">
+                    <h2 class="card-title">用户列表</h2>
+                    <div class="search-group">
+                        <form th:action="@{/admin/users}" method="get" class="search-group">
+                            <input type="text" name="keyword" class="form-input" placeholder="搜索用户昵称..."
+                                th:value="${keyword}" style="width: 260px;">
+                            <button type="submit" class="btn btn-primary">🔍 搜索</button>
+                            <a th:href="@{/admin/users}" class="btn btn-outline" style="min-width: fit-content;">重置</a>
+                        </form>
+                        <div style="border-left: 1px solid var(--slate-200); height: 24px; margin: 0 0.5rem;"></div>
+                        <a th:href="@{/admin/users/add}" class="btn btn-primary">➕ 新增用户</a>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(users)}" class="empty-state">
+                    <div class="empty-icon">👥</div>
+                    <p>暂无用户数据，请尝试调整搜索条件</p>
+                </div>
+
+                <div class="table-container" th:unless="${#lists.isEmpty(users)}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>用户资料</th>
+                                <th>学号/学校</th>
+                                <th>认证状态</th>
+                                <th>注册时间</th>
+                                <th style="text-align: right;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user : ${users}">
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 1rem;">
+                                        <div class="avatar" style="overflow: hidden;">
+                                            <img th:if="${user.avatarUrl != null && user.avatarUrl != ''}"
+                                                th:src="${user.avatarUrl.contains('/api/uploads/') ? user.avatarUrl.replace('/api/uploads/', '/uploads/') : user.avatarUrl}"
+                                                alt="用户头像" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <span th:unless="${user.avatarUrl != null && user.avatarUrl != ''}"
+                                                th:text="${user.nickname != null ? user.nickname.substring(0,1) : 'U'}">U</span>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 600; color: var(--slate-900);"
+                                                th:text="${user.nickname ?: '未设置'}">用户昵称</div>
+                                            <div style="font-size: 0.75rem; color: var(--slate-400);"
+                                                th:text="'ID: ' + ${user.id}">ID: 1</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;" th:text="${user.studentId ?: '-'}">-</div>
+                                    <div style="font-size: 0.75rem; color: var(--slate-500);"
+                                        th:text="${user.school ?: '-'}">-</div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success" th:if="${user.verificationStatus == 2}">✓
+                                        已认证</span>
+                                    <span class="badge badge-warning" th:if="${user.verificationStatus == 1}">⏳
+                                        待审核</span>
+                                    <span class="badge badge-neutral" th:if="${user.verificationStatus == 0}">○
+                                        未认证</span>
+                                    <span class="badge badge-danger" th:if="${user.verificationStatus == 3}">✕
+                                        认证失败</span>
+                                </td>
+                                <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"
+                                    style="font-variant-numeric: tabular-nums;">2024-01-01</td>
+                                <td style="text-align: right;">
+                                    <div style="display: inline-flex; gap: 0.5rem;">
+                                        <a th:href="@{/admin/users/{id}/edit(id=${user.id})}"
+                                            class="btn btn-outline btn-sm">编辑</a>
+                                        <form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post"
+                                            onsubmit="return confirm('确定要删除该用户吗？');" style="display: inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm">删除</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!-- 订单页 orders.wxml -->
+<view class="page-container">
+  <!-- 标签切换 -->
+  <view class="tab-header">
+    <view class="tab-switch">
+      <view class="tab-item {{orderType === 'buy' ? 'active' : ''}}" bindtap="switchOrderType" data-type="buy">
+        我买到的
+      </view>
+      <view class="tab-item {{orderType === 'sell' ? 'active' : ''}}" bindtap="switchOrderType" data-type="sell">
+        我卖出的
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view 
+      class="filter-item {{filter === item ? 'active' : ''}}" 
+      wx:for="{{['全部', '待发货', '待收货', '已完成']}}" 
+      wx:key="*this"
+      bindtap="onFilterChange"
+      data-filter="{{item}}"
+    >
+      <text>{{item}}</text>
+      <view wx:if="{{filter === item}}" class="active-indicator"></view>
+    </view>
+  </view>
+
+  <!-- 订单列表 -->
+  <scroll-view scroll-y class="order-list" enhanced show-scrollbar="{{false}}">
+    <view class="order-card" wx:for="{{orders}}" wx:key="id">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <view class="order-party">
+          <text class="party-icon">{{orderType === 'buy' ? '⬇️' : '⬆️'}}</text>
+          <text class="party-text">{{orderType === 'buy' ? '卖家' : '买家'}}：{{item.partner}}</text>
+        </view>
+        <view class="status-tag {{item.status === '待收货' ? 'pending' : item.status === '待付款' ? 'payment' : item.status === '待发货' ? 'payment' : 'completed'}}">
+          {{item.status}}
+        </view>
+      </view>
+
+      <!-- 订单内容 -->
+      <view class="order-content">
+        <image class="order-image" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="order-info">
+          <text class="order-title">{{item.title}}</text>
+          <view class="order-time">
+            <text>🕐</text>
+            <text>{{orderType === 'buy' ? '下单' : '售出'}}：{{item.time}}</text>
+          </view>
+          <text class="order-price">¥{{item.price}}</text>
+        </view>
+      </view>
+
+      <!-- 订单操作 -->
+      <view class="order-actions">
+        <view class="action-btn outline" bindtap="onContact">
+          <text>💬</text>
+          <text>联系{{orderType === 'buy' ? '卖家' : '买家'}}</text>
+        </view>
+        
+        <view wx:if="{{orderType === 'buy' && item.status === '待收货'}}" class="action-btn primary" catchtap="onConfirmReceipt" data-id="{{item.id}}">
+          确认收货
+        </view>
+
+        <view wx:if="{{orderType === 'buy' && item.status === '待付款'}}" class="action-btn primary" catchtap="onPayOrder" data-id="{{item.id}}">
+          立即支付
+        </view>
+
+        <view wx:if="{{orderType === 'buy' && item.status === '待发货'}}" class="action-btn primary blue" catchtap="onRemindDelivery" data-id="{{item.id}}">
+          提醒发货
+        </view>
+        
+        <view wx:if="{{orderType === 'sell' && item.status === '待收货'}}" class="action-btn primary blue" catchtap="onRemindPickup" data-id="{{item.id}}">
+          提醒取书
+        </view>
+
+        <view wx:if="{{orderType === 'sell' && item.status === '待付款'}}" class="action-btn primary orange">
+          提醒付款
+        </view>
+
+        <view wx:if="{{orderType === 'sell' && item.status === '待发货'}}" class="action-btn primary" catchtap="onDeliverOrder" data-id="{{item.id}}">
+          立即发货
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{orders.length === 0}}">
+      <text>🛍️</text>
+      <text>暂无相关订单</text>
+    </view>
+
+    <!-- 底部 -->
+    <view class="list-footer" wx:if="{{orders.length > 0}}">
+      <text>书环 · 知识因流动而美好</text>
+    </view>
+  </scroll-view>
+</view>

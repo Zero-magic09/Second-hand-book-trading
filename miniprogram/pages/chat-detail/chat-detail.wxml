@@ -1,0 +1,89 @@
+<!-- 聊天详情 chat-detail.wxml -->
+<view class="page-container">
+  <!-- 书籍上下文提示 -->
+  <view class="book-context" wx:if="{{relatedBook}}">
+    <view class="context-left">
+      <view class="book-thumb-wrapper">
+        <image class="book-thumb" src="{{relatedBook.image}}" mode="aspectFill"></image>
+      </view>
+      <view class="context-info">
+        <text class="context-title">正在咨询：{{relatedBook.title}}</text>
+        <text class="context-price">¥{{relatedBook.price}}</text>
+      </view>
+    </view>
+    <view class="view-book-btn" bindtap="onViewBook">查看宝贝</view>
+  </view>
+
+  <!-- 消息列表 -->
+  <scroll-view 
+    scroll-y 
+    class="messages-scroll" 
+    scroll-into-view="{{scrollToView}}"
+    enhanced 
+    show-scrollbar="{{false}}"
+  >
+    <view class="messages-container">
+      <view class="time-divider">
+        <text>14:20</text>
+      </view>
+      
+      <view 
+        class="message-item {{item.isMine ? 'mine' : 'other'}}" 
+        wx:for="{{messages}}" 
+        wx:key="id"
+        id="msg-{{item.id}}"
+      >
+        <image wx:if="{{!item.isMine}}" class="msg-avatar" src="{{session.otherPartyAvatar}}" mode="aspectFill"></image>
+        <view class="msg-content-wrapper">
+          <view class="msg-bubble">
+            <text class="msg-text">{{item.content}}</text>
+          </view>
+          <text class="msg-time">{{item.timestamp}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部输入区 -->
+  <view class="input-area">
+    <!-- 快捷回复 -->
+    <scroll-view scroll-x class="quick-actions" enhanced show-scrollbar="{{false}}">
+      <view 
+        class="quick-btn" 
+        wx:for="{{quickActions}}" 
+        wx:key="*this"
+        bindtap="onQuickAction"
+        data-text="{{item}}"
+      >
+        {{item}}
+      </view>
+    </scroll-view>
+
+    <!-- 输入框 -->
+    <view class="input-row">
+      <view class="media-btn">
+        <text>🖼️</text>
+      </view>
+      <view class="input-wrapper">
+        <input 
+          class="msg-input" 
+          placeholder="想对ta说点什么..."
+          placeholder-class="input-placeholder"
+          value="{{inputValue}}"
+          bindinput="onInput"
+          bindconfirm="onSend"
+          confirm-type="send"
+        />
+        <view class="emoji-btn">
+          <text>😊</text>
+        </view>
+      </view>
+      <view wx:if="{{inputValue}}" class="send-btn" bindtap="onSend">
+        <text>➤</text>
+      </view>
+      <view wx:else class="plus-btn">
+        <text>➕</text>
+      </view>
+    </view>
+  </view>
+</view>

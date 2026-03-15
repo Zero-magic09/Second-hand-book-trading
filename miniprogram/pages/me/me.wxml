@@ -1,0 +1,121 @@
+<!-- 个人中心 me.wxml -->
+<view class="page-container">
+  <scroll-view scroll-y class="content-scroll" enhanced show-scrollbar="{{false}}">
+    <!-- 个人信息头部 -->
+    <view class="profile-header">
+      <!-- 右上角按钮 -->
+      <view class="header-actions">
+        <view class="action-btn settings">
+          <text class="action-icon">⚙️</text>
+        </view>
+      </view>
+
+      <!-- 用户信息 -->
+      <view class="user-info">
+        <view class="avatar-wrapper" bindtap="onAvatarTap">
+          <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          <view class="verified-badge" wx:if="{{userInfo.verificationStatus === 2}}">
+            <text class="badge-icon">🛡️</text>
+          </view>
+        </view>
+        <view class="user-details">
+          <text class="user-name">{{userInfo.nickname}}</text>
+          <view class="user-tag">{{userInfo.school}} · {{userInfo.verificationStatus === 2 ? '实名学子' : '未认证'}}</view>
+        </view>
+      </view>
+
+      <!-- 统计数据 -->
+      <view class="stats-card">
+        <view class="stat-item" wx:for="{{stats}}" wx:key="label">
+          <text class="stat-value {{item.colorClass}}">{{item.value}}</text>
+          <text class="stat-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 菜单列表 -->
+    <view class="menu-section">
+      <view class="menu-card">
+        <view 
+          class="menu-item" 
+          wx:for="{{menuItems}}" 
+          wx:key="label"
+          bindtap="onMenuTap"
+          data-item="{{item}}"
+        >
+          <view class="menu-left">
+            <view class="menu-icon-wrapper {{item.bgClass}}">
+              <text class="menu-icon">{{item.emoji}}</text>
+            </view>
+            <text class="menu-label">{{item.label}}</text>
+          </view>
+          <view class="menu-right">
+            <view class="menu-badge" wx:if="{{item.badge}}">{{item.badge}}</view>
+            <text class="arrow-icon">▶</text>
+          </view>
+        </view>
+
+        <view class="menu-item logout" bindtap="onLogout">
+          <view class="menu-left">
+            <view class="menu-icon-wrapper bg-rose">
+              <text class="menu-icon">🚪</text>
+            </view>
+            <text class="menu-label text-rose">退出登录</text>
+          </view>
+          <view class="menu-right">
+            <text class="arrow-icon">▶</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部 -->
+    <view class="footer">
+      <text class="footer-brand">校园书环</text>
+      <text class="footer-text">专为浙大师生打造</text>
+    </view>
+  </scroll-view>
+
+  <!-- 编辑个人信息弹窗 -->
+  <view class="edit-modal" wx:if="{{showEditModal}}">
+    <view class="modal-mask" bindtap="closeEditModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">编辑个人信息</text>
+        <view class="close-btn" bindtap="closeEditModal">
+          <text>✕</text>
+        </view>
+      </view>
+
+      <view class="modal-body">
+        <!-- 头像选择 -->
+        <view class="form-item">
+          <text class="form-label">头像</text>
+          <view class="avatar-select" bindtap="chooseAvatar">
+            <image class="preview-avatar" src="{{editForm.avatarUrl}}" mode="aspectFill"></image>
+            <view class="avatar-overlay">
+              <text class="overlay-text">点击更换</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 昵称输入 -->
+        <view class="form-item">
+          <text class="form-label">昵称</text>
+          <input 
+            class="form-input" 
+            type="text" 
+            placeholder="请输入昵称"
+            value="{{editForm.nickname}}"
+            bindinput="onNicknameInput"
+          />
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="btn-cancel" bindtap="closeEditModal">取消</button>
+        <button class="btn-save" bindtap="saveProfile">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

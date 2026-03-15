@@ -1,0 +1,97 @@
+<!-- 结算页 checkout.wxml -->
+<view class="page-container">
+  <!-- 支付成功状态 -->
+  <view class="success-view" wx:if="{{paySuccess}}">
+    <view class="success-icon-wrapper">
+      <text class="success-icon">✅</text>
+    </view>
+    <text class="success-title">支付成功</text>
+    <text class="success-desc">书环已连接，去提醒卖家发货吧！</text>
+  </view>
+
+  <!-- 正常结算视图 -->
+  <block wx:else>
+    <!-- 头部 -->
+    <!-- 头部 (已移除，使用原生导航) -->
+
+    <scroll-view scroll-y class="content-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="content-wrapper">
+        <!-- 商品卡片 -->
+        <view class="item-card">
+          <image class="item-image" src="{{book.images[0]}}" mode="aspectFill"></image>
+          <view class="item-info">
+            <text class="item-title">{{book.title}}</text>
+            <text class="item-seller">卖家：{{book.sellerName}}</text>
+            <text class="item-price">¥{{book.price}}</text>
+          </view>
+        </view>
+
+        <!-- 安全提示 -->
+        <view class="safety-tips">
+          <text class="tips-icon">ℹ️</text>
+          <view class="tips-content">
+            <text class="tips-title">校园交易安全提醒：</text>
+            <text class="tips-text">平台资金将暂托管在书环账户。请选择校内人流密集的公共场所进行面交，确认收到书籍后再在APP点击"确认收货"。</text>
+          </view>
+        </view>
+
+        <!-- 支付方式 -->
+        <view class="payment-card">
+          <text class="card-label">支付方式</text>
+          
+          <!-- 微信支付 -->
+          <view class="payment-option" bindtap="selectPayment" data-method="1">
+            <view class="payment-left">
+              <view class="payment-icon-wrapper">
+                <text class="payment-icon">💰</text>
+              </view>
+              <text class="payment-name">微信支付</text>
+            </view>
+            <view class="payment-radio {{selectedPaymentMethod == 1 ? 'checked' : ''}}"></view>
+          </view>
+
+          <!-- 支付宝支付 -->
+          <view class="payment-option" bindtap="selectPayment" data-method="2">
+            <view class="payment-left">
+              <view class="payment-icon-wrapper alipay">
+                <text class="payment-icon">💎</text>
+              </view>
+              <text class="payment-name">支付宝</text>
+            </view>
+            <view class="payment-radio {{selectedPaymentMethod == 2 ? 'checked' : ''}}"></view>
+          </view>
+        </view>
+
+        <!-- 价格明细 -->
+        <view class="price-card">
+          <view class="price-row">
+            <text class="price-label">书籍金额</text>
+            <text class="price-value">¥{{book.price}}</text>
+          </view>
+          <view class="price-row">
+            <text class="price-label">平台服务费</text>
+            <text class="price-value free">¥0.00 (免费)</text>
+          </view>
+          <view class="price-row total">
+            <text class="price-label">合计支付</text>
+            <text class="price-value total-value">¥{{book.price}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 底部按钮 -->
+    <view class="footer-btn">
+      <view class="btn-group">
+        <button class="cancel-btn" bindtap="onCancelPay">
+          <text>{{isExistingOrder ? '返回' : '取消支付'}}</text>
+        </button>
+        <button class="pay-btn {{isPaying ? 'loading' : ''}}" bindtap="onPay" disabled="{{isPaying}}">
+          <text wx:if="{{isPaying}}" class="loading-icon">⏳</text>
+          <text wx:else class="shield-icon">🛡️</text>
+          <text>{{isPaying ? '正在唤起支付...' : '确认支付 ¥' + book.price}}</text>
+        </button>
+      </view>
+    </view>
+  </block>
+</view>

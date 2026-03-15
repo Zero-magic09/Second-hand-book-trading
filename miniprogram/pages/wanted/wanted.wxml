@@ -1,0 +1,44 @@
+<!-- 求购区 wanted.wxml -->
+<view class="page-container">
+  <view class="header">
+    <view class="header-title">
+      <text class="header-icon">🏷️</text>
+      <text class="title-text">大家在求购</text>
+    </view>
+    <view class="publish-btn" bindtap="onPublishWanted">
+      <text class="btn-text">发求购</text>
+    </view>
+  </view>
+
+  <view class="content-scroll">
+    <view class="wanted-list">
+      <view class="wanted-card" wx:for="{{wantedList}}" wx:key="id" bindtap="onWantedDetail" data-item="{{item}}">
+        <image class="user-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+        <view class="card-content">
+          <view class="card-header">
+            <text class="user-name">{{item.user}}</text>
+            <text class="post-time">{{item.time}}</text>
+          </view>
+          <text class="wanted-title">{{item.title}}</text>
+          <text class="wanted-author" wx:if="{{item.author}}">作者: {{item.author}}</text>
+          <view class="card-footer">
+            <view class="tags">
+              <view class="tag budget">预算: ¥{{item.budget}}</view>
+              <view class="tag major">{{item.major}}</view>
+            </view>
+            <view class="action-btn" catchtap="onHaveBook" data-item="{{item}}">
+              <text class="action-icon">💬</text>
+              <text class="action-text">我有书</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提示区域 -->
+    <view class="tips-card">
+      <text class="tips-text">没找到你需要的教材？</text>
+      <text class="tips-text">发布求购信息，让有书的学长学姐看到！</text>
+    </view>
+  </view>
+</view>
